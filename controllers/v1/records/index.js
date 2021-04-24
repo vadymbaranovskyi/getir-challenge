@@ -11,6 +11,7 @@ const { body, validationResult } = require('express-validator')
 const Logger = require('../../../components/Logger')
 const { wrap } = require('../../../middlewares')
 
+// Generate the error message based on experess-validator errors object
 const generateErrorMessage = (errors = []) => {
   let message = ''
 
@@ -18,6 +19,7 @@ const generateErrorMessage = (errors = []) => {
     message += error.msg
 
     if (index !== errors.length - 1) {
+      // If it's not the last item, add delimiter
       message += ' | '
     }
   }
@@ -29,12 +31,14 @@ const generateErrorMessage = (errors = []) => {
   return message
 }
 
+// Handle POST request
 const routePost = async (req, res) => {
   const { startDate, endDate, minCount, maxCount } = req.body
 
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
+    // If there are errors in the request
     throw BadRequestError(generateErrorMessage(errors.errors))
   }
 
@@ -43,11 +47,12 @@ const routePost = async (req, res) => {
 
   try {
     await client.connect()
-    const database = client.db('getir-case-study')
+    const database = client.db('getir-case-study') // Connect to database
 
     const pipeline = [
       {
         $addFields: {
+          // Add a new field named "totalCount" that is sum of counts array
           totalCount: { $sum: '$counts' }
         }
       },

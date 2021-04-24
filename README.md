@@ -15,3 +15,9 @@ Checks code for code style issues.
 
 ### `yarn start`
 Runs the app. Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+
+## API Documentation
+Check the [API Docs](https://documenter.getpostman.com/view/11830653/TzJx9H7E).
+
+## Heroku App
+Check the [Heroku app](https://vadym-getir-challenge.herokuapp.com).
